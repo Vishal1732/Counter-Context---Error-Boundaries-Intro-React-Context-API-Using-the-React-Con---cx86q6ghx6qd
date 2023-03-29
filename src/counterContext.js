@@ -1,23 +1,23 @@
-import React, { createContext } from "react";
+import React from "react";
 
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hasError: false,
+    };
+  }
 
-
-
-
-const counterContext = createContext()
-
-
-const CounterStateContext = (props) => {
-
-    return (
-        <div id="counter-context">
-            <counterContext.Provider value={{ count, setCount }}>
-                {props.children}
-            </counterContext.Provider >
-        </div>
-
-    )
+  static getDerivedStateFromError(error) {
+    return {
+      hasError: true,
+    };
+  }
+  render() {
+    if (this.state.hasError) {
+      return <p id="error">There was an error.</p>;
+    }
+    return <>{this.props.children}</>;
+  }
 }
-
-export { counterContext, CounterStateContext }
-
+export default ErrorBoundary;

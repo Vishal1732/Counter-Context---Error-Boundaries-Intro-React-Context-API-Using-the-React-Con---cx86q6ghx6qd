@@ -1,23 +1,20 @@
-import React from "react";
+import React, { createContext } from "react";
+import { useState } from "react";
+import { Counter } from "./components/Counter";
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hasError: false,
-    };
-  }
+const counterContext = createContext()
 
-  static getDerivedStateFromError(error) {
-    return {
-      hasError: true,
-    };
-  }
-  render() {
-    if (this.state.hasError) {
-      return <p id="error">There was an error.</p>;
-    }
-    return <>{this.props.children}</>;
-  }
+const CounterStateContext = (props) => {
+const [count,setCount] = useState(0)
+    return (
+        <div id="counter-context">
+            <counterContext.Provider value={{ count, setCount }}>
+                {props.children}
+            </counterContext.Provider >
+        </div>
+        
+
+    )
 }
-export default ErrorBoundary;
+
+export { counterContext, CounterStateContext }
